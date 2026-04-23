@@ -16,6 +16,9 @@ public class Comentario {
         this.texto = texto;
     }
 
+
+    //Gettes y Setters de la clase Comentario
+
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }

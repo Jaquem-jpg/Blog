@@ -15,6 +15,8 @@ public class Publicacion {
     private int consecutivo;
     private List<Comentario> comentarios;
 
+
+    // Constructor
     public Publicacion(String titulo, String texto, String creador) {
         this.codigo = contadorCodigo++;
         this.titulo = titulo;
@@ -24,6 +26,8 @@ public class Publicacion {
         this.consecutivo = 0;
         this.comentarios = new ArrayList<>();
     }
+
+    // Gettes y Setters 
 
     public int getCodigo() {
         return codigo;
@@ -41,6 +45,9 @@ public class Publicacion {
         return fechaPublicacion;
     }
 
+
+    // Métodos de la clase Publicacion
+    
     public void agregarComentario(String email, String ip, String texto) {
         Comentario comentario = new Comentario(email, ip, texto);
         comentarios.add(comentario);
