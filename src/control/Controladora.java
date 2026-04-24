@@ -24,7 +24,7 @@ public class Controladora {
 
 	
 	/**
-     * 1. Función para crear un nuevo blog
+     *  Método para crear un nuevo blog
      * @return el código asignado al blog recién creado
      */
 	public int CrearBlog(String nombre, String descripcion) {
@@ -35,12 +35,46 @@ public class Controladora {
 		return codigo;
 	}
 	
-	/**
-     * Método que devuelve cuántos blogs hay actualmente
-     */
+	
+	// Borrar un Blog 
+	public boolean borrarBlog(int codigoBlog) {
+		if (blogs.remove(codigoBlog) != null) {
+			System.out.println("Blog " + codigoBlog + "eliminado");
+			return true;
+		} else {
+			System.out.println("No se encontró el blog con código: " + codigoBlog);
+			return false;
+			
+		}
+	}
+	
+	
+	
+	// Obtener lista de blogs 
+	public Map<Integer, String> obtenerBlogs(){
+		Map<Integer, String> lista = new HashMap<>();
+        for (Map.Entry<Integer, Blog> entry : blogs.entrySet()) {
+            lista.put(entry.getKey(), entry.getValue().getNombre());
+        }
+        return lista;
+	}
+	
+	
+	
+	
+	
+     // Métodos auxiliar 
+     
 	public int getCantidadBlogs() {
 		return blogs.size();
 	}
 	
+	
+	
+	public boolean existeBlog(int codigoBlog) {
+        return blogs.containsKey(codigoBlog);
+    }
+	
+
 	
 }
