@@ -104,19 +104,7 @@ public class Main {
 		}
 	}
 	
-	private static int leerEntero() {
-        while (!scanner.hasNextInt()) {
-            System.out.print("Por favor ingrese un número válido: ");
-            scanner.next();
-        }
-        return scanner.nextInt();
-    }
-
-    private static String leerTexto() {
-        scanner.nextLine();
-        return scanner.nextLine().trim();
-    }
-    
+	
     
     
     
@@ -354,6 +342,24 @@ public class Main {
         if (borrado) {
             System.out.println("Comentario borrado correctamente.");
         }
+    }
+    
+    
+    
+    //Utilidades 
+    private static int leerEntero() {
+        while (!scanner.hasNextInt()) {
+            System.out.print("Ingrese un numero valido: ");
+            scanner.next();
+        }
+        int num = scanner.nextInt();
+        scanner.nextLine(); 
+        return num;
+    }
+
+    private static String leerTexto() {
+        scanner.nextLine(); //
+        return scanner.nextLine().trim();
     }
  
     
