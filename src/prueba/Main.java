@@ -219,6 +219,143 @@ public class Main {
             }
         }
 
-	
-	
+    }
+    
+ // ====================== MENÚ DEL BLOG ACTUAL ======================
+    
+    private static void menuBlogActual() {
+    	if (blogActual == null) {
+            System.out.println("No hay ningun blog seleccionado.");
+            return;
+        }
+    	while (true) {
+    		
+    	
+    	System.out.println("\n--- BLOG ACTUAL: Codigo " + blogActual + " ---");
+        System.out.println("1. Crear nueva publicacion");
+        System.out.println("2. Mostrar lista de publicaciones");
+        System.out.println("3. Ver publicacion completa con comentarios");
+        System.out.println("4. Agregar comentario a una publicacion");
+        System.out.println("5. Borrar un comentario");
+        System.out.println("6. Regresar al menu de blogs");
+        System.out.print("Seleccione una opcion: ");
+
+        int opcion = leerEntero();
+        
+        switch (opcion) {
+        case 1:
+            crearNuevaPublicacion();
+            break;
+        case 2:
+            mostrarPublicacionesDelBlogActual();
+            break;
+        case 3:
+            verPublicacionCompleta();
+            break;
+        case 4:
+            agregarComentarioAPublicacion();
+            break;
+        case 5:
+            borrarComentarioDePublicacion();
+            break;
+        case 6:
+            blogActual = null; // Deseleccionamos el blog actual
+            return;
+        default:
+            System.out.println("Opcion invalida le informo.");
+        }
+    }
+ }
+    
+ // Crear nueva publicación en el blog actual
+    private static void crearNuevaPublicacion() {
+    	System.out.print("Ingrese el titulo de la publicacion: ");
+        String titulo = leerTexto();
+
+        System.out.print("Ingrese el contenido de la publicacion: ");
+        String texto = leerTexto();
+
+        System.out.print("Ingrese el nombre del creador: ");
+        String creador = leerTexto();
+        
+        
+        if (titulo.isEmpty() || texto.isEmpty()) {
+            System.out.println("El titulo y el texto son obligatorios.");
+            return;
+        }
+        controlador.crearPublicacion(blogActual, titulo, texto, creador);
+        
+    }
+    
+    
+ // Mostrar lista de publicaciones del blog actual
+    private static void mostrarPublicacionesDelBlogActual() {
+    	Map<Integer, String> publicaciones = controlador.obtenerPublicacionesDeBlog(blogActual);
+    	if (publicaciones.isEmpty()) {
+            System.out.println("No hay publicaciones en este blog aun.");
+            return;
+        }
+    	
+    	System.out.println("\n--- PUBLICACIONES DEL BLOG " + blogActual + " ---");
+    	
+    	for (Map.Entry<Integer, String> entry : publicaciones.entrySet()) {
+            System.out.println("[" + entry.getKey() + "] " + entry.getValue());
+        }
+    }
+    
+    
+ // Ver publicación completa con comentarios
+    private static void verPublicacionCompleta() {
+        mostrarPublicacionesDelBlogActual();
+        System.out.print("Ingrese el codigo de la publicación que desea ver: ");
+        int codigoPub = leerEntero();
+
+        String resumen = controlador.obtenerPublicacion(blogActual, codigoPub);
+        System.out.println("\n" + resumen);
+    }
+    
+    
+    
+ // Agregar comentario a una publicación
+    private static void agregarComentarioAPublicacion() {
+        mostrarPublicacionesDelBlogActual();
+        System.out.print("Ingrese el codigo de la publicacion: ");
+        int codigoPub = leerEntero();
+
+        System.out.print("Ingrese su email: ");
+        String email = leerTexto();
+
+        System.out.print("Ingrese su IP (o presione Enter para usar 127.0.0.1): ");
+        String ip = leerTexto();
+        if (ip.isEmpty()) ip = "127.0.0.1";
+
+        System.out.print("Ingrese el comentario: ");
+        String texto = leerTexto();
+
+        if (texto.isEmpty()) {
+            System.out.println("El comentario no puede estar vacio.");
+            return;
+        }
+
+        controlador.agregarComentario(blogActual, codigoPub, email, ip, texto);
+    }
+    
+    
+ // Borrar un comentario
+    private static void borrarComentarioDePublicacion() {
+        mostrarPublicacionesDelBlogActual();
+        System.out.print("Ingrese el código de la publicación: ");
+        int codigoPub = leerEntero();
+
+        System.out.print("Ingrese la posición del comentario a borrar: ");
+        int posicion = leerEntero();
+
+        boolean borrado = controlador.borrarComentario(blogActual, codigoPub, posicion);
+        if (borrado) {
+            System.out.println("Comentario borrado correctamente.");
+        }
+    }
+ 
+    
 }
+
