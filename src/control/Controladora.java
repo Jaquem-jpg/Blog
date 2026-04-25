@@ -31,7 +31,7 @@ public class Controladora {
 		Blog nuevoBlog = new Blog(nombre, descripcion);
 		int codigo = contadorCodigoBlog ++;
 		blogs.put(codigo, nuevoBlog);
-		System.out.println("Blog creado exitosamente con código: " + codigo);
+		System.out.println("Blog creado exitosamente con el  código: " + codigo);
 		return codigo;
 	}
 	
@@ -42,7 +42,7 @@ public class Controladora {
 			System.out.println("Blog " + codigoBlog + "eliminado");
 			return true;
 		} else {
-			System.out.println("No se encontró el blog con código: " + codigoBlog);
+			System.out.println("No se encontró el blog con el código: " + codigoBlog);
 			return false;
 			
 		}
@@ -61,9 +61,75 @@ public class Controladora {
 	
 	
 	
+	// Crear  la publicación de un blog especifico 
+	
+	public  void crearPublicacion(int codigoBlog, String titulo, String texto, String creador) {
+		Blog blog = blogs.get(codigoBlog);
+		if(blog != null) {
+			blog.crearPublicacion(titulo, texto, creador);
+			System.out.println("Publicación creada en el blog: " + codigoBlog);
+		} else {
+			System.out.println(" Error, No existe el blog con  el código: " + codigoBlog);
+		}
+	}
 	
 	
-     // Métodos auxiliar 
+	// Obtener lista de publicaciones de un blog 
+	public Map<Integer, String> obtenerPublicacionesDeBlog(int codigoBlog){
+		Blog blog = blogs.get(codigoBlog);
+		if(blog != null) {
+			return blog.getTitulosPublicacionesNumerados();
+		} else {
+			System.out.println(" Error, No existe el blog con el código: " + codigoBlog);
+            return new HashMap<>();
+		}
+	}
+	
+	
+	//Obtener una publicación completa
+	public String obtenerPublicacion(int codigoBlog, int codigoPublicacion) {
+		Blog blog = blogs.get(codigoBlog);
+		 if( blog != null) {
+			 return blog.getResumenPublicacion(codigoPublicacion);
+		 } else {
+			 return " Error, No existe el blog con el código: " + codigoBlog;
+		 }
+	} 
+	
+	
+	
+	// Agregar comentario a una publicación
+	public void agregarComentario(int codigoBlog, int codigoPublicacion, String email, String ip, String texto) {
+		Blog blog = blogs.get(codigoBlog);
+		if(blog != null) {
+			blog.agregarComentarioAPublicacion(codigoPublicacion, email, ip, texto);
+            System.out.println(" Comentario agregado a la publicación " + codigoPublicacion);
+		} else {
+			System.out.println("Error, No existe el blog con el código: " + codigoBlog);
+		}
+	}
+	
+	
+	// Borrar el comentario de una publicación
+	public boolean borrarComentario(int codigoBlog, int codigoPublicacion, int posicionComentario) {
+		Blog blog = blogs.get(codigoBlog);
+		if (blog != null) {
+			boolean borrado = blog.borrarComentarioDePublicacion(codigoPublicacion, posicionComentario);
+			if(borrado) {
+				System.out.println(" Comentario borrado exitosamente.");
+			} else {
+				System.out.println(" No se pudo logro borrar el comentario.");
+			}
+			return borrado;
+		} else {
+			System.out.println(" Error, No existe el blog con código:  " + codigoBlog);
+            return false;
+		}
+	}
+	
+
+
+     // Métodos auxiliares
      
 	public int getCantidadBlogs() {
 		return blogs.size();
