@@ -116,6 +116,108 @@ public class Main {
         scanner.nextLine();
         return scanner.nextLine().trim();
     }
+    
+    
+    
+    
+    //  ====================== MENÚ DE ADMINISTRACIÓN DE BLOGS ======================
+    private static void menuAdministracionBlogs() {
+    	while (true) {
+    		System.out.println("\n--- ADMINISTRACION DE BLOGS ---");
+            System.out.println("1. Mostrar lista de blogs");
+            System.out.println("2. Crear nuevo blog");
+            System.out.println("3. Seleccionar blog para trabajar");
+            System.out.println("4. Borrar un blog");
+            System.out.println("5. Regresar al menu principal");
+            System.out.print("Seleccione una opcion: ");
+
+            int opcion = leerEntero();
+            
+            switch (opcion) {
+            case 1:
+                mostrarListaBlogs();
+                break;
+            case 2:
+                crearNuevoBlog();
+                break;
+            case 3:
+                seleccionarBlogActual();
+                break;
+            case 4:
+                borrarBlog();
+                break;
+            case 5:
+                return; // Se regresa al menú principal
+            default:
+                System.out.println("Opcion invalida. Intente de nuevo.");
+            }
+    	}
+    }
+    
+    
+ // Mostrar lista de blogs con códig y nombre
+    private static void mostrarListaBlogs() {
+    	Map<Integer, String> blogs = controlador.obtenerBlogs();
+    	if (blogs.isEmpty()) {
+            System.out.println("No hay blogs registrados aun.");
+            return;
+        }
+    	
+    	System.out.println("\n--- LISTA DE BLOGS ---");
+    	
+    	
+    	for (Map.Entry<Integer, String> entry : blogs.entrySet()) {
+    		System.out.println("[" + entry.getKey() + "] " + entry.getValue());
+    	}
+    	
+    	System.out.println("------------------------");
+    }
+    
+    
+    // Crear nuevo blog
+    private static void crearNuevoBlog() {
+    	System.out.print("Ingrese el nombre del blog: ");
+        String nombre = leerTexto();
+        
+        System.out.print("Ingrese una descripcion del blog: ");
+        String descripcion = leerTexto();
+        
+        if (nombre.isEmpty()) {
+            System.out.println("El nombre del blog no puede estar vacío.");
+            return;
+        }
+        
+        int nuevoCodigo = controlador.crearBlog(nombre, descripcion);
+        System.out.println("Blog creado con codigo: " + nuevoCodigo);
+        
+    }
+    
+    // Seleccionar blog actual para trabajar
+    private static void seleccionarBlogActual() {
+    	mostrarListaBlogs();
+        System.out.print("Ingrese el codigo del blog con el que desea trabajar: ");
+        int codigo = leerEntero();
+        
+        if (controlador.existeBlog(codigo)) {
+        	blogActual = codigo;
+            System.out.println(" Blog " + codigo + " seleccionado como actual.");
+            menuBlogActual();   
+        }else {
+        	System.out.println(" No existe un blog con el codigo mop. " + codigo);
+        }
+    }
+    
+ // Borrar un blog
+    private static void borrarBlog() {
+        mostrarListaBlogs();
+        System.out.print(" Porfavor ingrese el codigo del blog que desea borrar: ");
+        int codigo = leerEntero();
+
+        if (controlador.borrarBlog(codigo)) {
+            if (blogActual != null && blogActual == codigo) {
+                blogActual = null; 
+            }
+        }
 
 	
 	
