@@ -2,6 +2,7 @@ package logica;
 
 //Imports necesarios 
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,33 @@ public class Blog {
 	public LocalDateTime getFechaCreacion() {
 		return FechaCreacion;
 	}
+	
+	
+	
+	
+	
+	 // Método privado para buscar publicación por código 
+    private Publicacion buscarPublicacionPorCodigo(int codigo) throws PublicacionNoEncontradaException {
+        for (Publicacion pub : publicaciones) {
+            if (pub.getCodigo() == codigo) {
+                return pub;
+            }
+        }
+        throw new PublicacionNoEncontradaException(codigo);
+    }
+	
+	
+    
+    // Método público para validar si existe 
+    public boolean existePublicacion(int codigo) {
+        for (Publicacion pub : publicaciones) {
+            if (pub.getCodigo() == codigo) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
 	
 	
 	//Métodos
