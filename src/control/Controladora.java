@@ -27,7 +27,7 @@ public class Controladora {
      *  Método para crear un nuevo blog
      * @return el código asignado al blog recién creado
      */
-	public int CrearBlog(String nombre, String descripcion) {
+	public int crearBlog(String nombre, String descripcion) {
 		Blog nuevoBlog = new Blog(nombre, descripcion);
 		int codigo = contadorCodigoBlog ++;
 		blogs.put(codigo, nuevoBlog);
