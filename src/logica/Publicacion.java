@@ -54,33 +54,50 @@ public class Publicacion {
     }
 
     public List<Comentario> getComentarios() {
-        return comentarios;
+        return new ArrayList<>(comentarios);  //Así devolvemos una copia.
     }
 
-    public boolean eliminarComentario(int posicion) {
-        if (posicion >= 0 && posicion < comentarios.size()) {
-            comentarios.remove(posicion);
-            return true;
+    /**
+     * Elimina el comentario en la posición indicada.
+     * 
+     * @param posicion índice del comentario a eliminar 
+     * @throws IndexOutOfBoundsException si la posición es negativa o 
+     *         mayor o igual al tamaño de la lista de comentarios
+     */
+    public void eliminarComentario(int posicion) {
+        if (posicion < 0 || posicion >= comentarios.size()) {
+            throw new IndexOutOfBoundsException(
+                "Posicion invalida: " + posicion + 
+                ". Debe estar entre 0 y " + (comentarios.size() - 1)
+            );
         }
-        return false;
+        
+        comentarios.remove(posicion);
     }
-
+    
+    
+    
     public String mostrarConComentarios() {
-        StringBuilder sb = new StringBuilder();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        sb.append("Publicación #").append(codigo).append("\n");
-        sb.append("Título: ").append(titulo).append("\n");
-        sb.append("Creador: ").append(creador).append("\n");
-        sb.append("Fecha: ").append(fechaPublicacion.format(formatter)).append("\n");
-        sb.append("Texto: ").append(texto).append("\n");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Publicación #%d%n", codigo));
+        sb.append(String.format("Título: %s%n", titulo));
+        sb.append(String.format("Creador: %s%n", creador));
+        sb.append(String.format("Fecha: %s%n", fechaPublicacion.format(formatter)));
+        sb.append(String.format("Texto: %s%n", texto));
         sb.append("Comentarios:\n");
+
         if (comentarios.isEmpty()) {
-            sb.append("  Sin comentarios.\n");
+            sb.append(" Sin comentarios.\n");
         } else {
             for (int i = 0; i < comentarios.size(); i++) {
-                sb.append("  ").append(i).append(": ").append(comentarios.get(i).toString()).append("\n");
+                sb.append(String.format(" %d: %s%n", i, comentarios.get(i)));
             }
         }
+
         return sb.toString();
     }
+    
+    
 }
